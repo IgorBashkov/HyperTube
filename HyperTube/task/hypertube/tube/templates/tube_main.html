@@ -9,8 +9,10 @@
 <div>
     <a target="_blank" href="/login/">Log in</a>
 </div>
-<div>
+<p>
     {{ videos|length }} videos
+</p>
+<div>
     {% for video in videos %}
         <div><a href="{{ video.file }}">{{ video.title }}</a></div>
     {% endfor %}
