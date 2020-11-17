@@ -56,7 +56,7 @@ ROOT_URLCONF = 'hypertube.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['tube/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,3 +126,5 @@ STATIC_URL = '/static/'
 # MEDIA
 MEDIA_ROOT = os.environ.get('HYPERSKILL_MEDIA_ROOT') or os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+
+LOGOUT_REDIRECT_URL = '/login'

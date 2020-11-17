@@ -1,6 +1,20 @@
 from django.shortcuts import render
-from .models import Video, VideoTag, Tag
+from .models import Video
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import CreateView
+from django.contrib.auth.views import LoginView
 # Create your views here.
+
+
+class MyLoginView(LoginView):
+    redirect_authenticated_user = True
+    template_name = 'login.html'
+
+
+class MySignupView(CreateView):
+    form_class = UserCreationForm
+    success_url = 'http://127.0.0.1:8000/login/'
+    template_name = 'signup.html'
 
 
 def tube_main(request):
