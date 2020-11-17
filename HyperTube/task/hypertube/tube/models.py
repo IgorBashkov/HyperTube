@@ -11,7 +11,9 @@ class Video(models.Model):
 
 
 class VideoTag(models.Model):
-    tag = models.ForeignKey('Tag', on_delete=models.CASCADE)
+    tag = models.ForeignKey('Tag',
+                            on_delete=models.CASCADE,
+                            )
     video = models.ForeignKey('Video', on_delete=models.CASCADE)
 
 
