@@ -41,12 +41,13 @@ def upload_file(request):
     if request.method == 'POST':
         form = UploadVideoForm(request.POST, request.FILES)
         if form.is_valid():
-            f = request.FILES['files']
-            vid, stat_vid = Video.objects.get_or_create(
-                title=request.POST.get('title'),
+            data = form.cleaned_data
+            f = data['video']
+            vid = Video.objects.create(
+                title=data['title'],
                 file=f.name,
             )
-            tg, stat_tg = Tag.objects.get_or_create(name=request.POST.get('tags'))
+            tg = Tag.objects.create(name=data['tags'])
             VideoTag.objects.create(tag=tg, video=vid).save()
             vid.save()
             tg.save()
@@ -54,7 +55,7 @@ def upload_file(request):
                 for chunk in f.chunks():
                     destination.write(chunk)
             # response = HttpResponseRedirect('/tube/')
-            return redirect('/tube/')
+            return redirect('index')
 
     else:
         form = UploadVideoForm
