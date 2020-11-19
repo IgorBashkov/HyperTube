@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Hypertube</h2>
+<p>
+    <a target="_blank" href="/login/">Log in</a>
+</p>
+{% if user.is_authenticated %}
+<p>Hello, {{ user.username}}!</p>
+<p>
+    <a target="_blank" href="/logout/">Log out</a>
+</p>
+{% else %}
+<p>Hello, guest!</p>
+
+<p>
+    <a target="_blank" href="/signup/">Signup</a>
+</p>
+{% endif %}
+
+<p>
+    <a target="_blank" href="/tube/">Main page</a>
+</p>
+
+{% block page_content %}{% endblock %}
+</body>
+</html>

@@ -62,5 +62,9 @@ def upload_file(request):
     return render(request, 'upload.html', {'form': form})
 
 
+def watch(request, **kwargs):
+    context = {}
+    return render(request, 'watch.html', context)
+
 
 

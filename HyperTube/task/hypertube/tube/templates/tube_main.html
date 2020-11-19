@@ -5,23 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-<h2>Hypertube</h2>
-<div>
-    <a target="_blank" href="/login/">Log in</a>
-</div>
-<div>
-    <a target="_blank" href="/logout/">Log out</a>
-</div>
+{% extends "base.html" %}
+
+{% block page_content %}
 <form action="/tube/" method="get">
   <input name="q">
   <button type="submit">search</button>
 </form>
-
-    {{ tag }}
-
-<p>
-    {{ videos|length }} videos
-</p>
+<p>    {{ tag }} </p>
+<p> {{ videos|length }} videos </p>
 <div>
     {% for video in videos %}
         <p><a href="/tube/watch/{{ video.id }}/">{{ video.title }}</a></p>
@@ -30,6 +22,6 @@
 <div>
     <a target="_blank" href="/tube/upload/">Upload video</a>
 </div>
-
+{% endblock %}
 </body>
 </html>
