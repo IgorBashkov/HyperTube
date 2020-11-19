@@ -9,6 +9,9 @@
 <div>
     <a target="_blank" href="/login/">Log in</a>
 </div>
+<div>
+    <a target="_blank" href="/logout/">Log out</a>
+</div>
 <form action="/tube/" method="get">
   <input name="q">
   <button type="submit">search</button>
@@ -21,7 +24,7 @@
 </p>
 <div>
     {% for video in videos %}
-        <a href="/tube/watch/{{ video.id }}/">{{ video.title }}</a>
+        <p><a href="/tube/watch/{{ video.id }}/">{{ video.title }}</a></p>
     {% endfor %}
 </div>
 <div>
