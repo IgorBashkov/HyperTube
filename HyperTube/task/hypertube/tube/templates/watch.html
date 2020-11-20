@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" >
+    <title>
+        Watch
+    </title>
 </head>
 <body>
 {% extends "base.html" %}
@@ -10,7 +12,7 @@
 {% block page_content %}
     <p>
         <video width="640" height="480" controls>
-            <source src="/{{ folder }}/{{ video.file }}" type="video/{{ type }}">
+            <source src="/tube/{{ video.file }}" type="video/{{ type }}">
         </video>
     </p>
 <p>

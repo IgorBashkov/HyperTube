@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Video, Tag, VideoTag
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView
 from .forms import UploadVideoForm
-from hypertube.settings import MEDIA_ROOT
-from django.shortcuts import redirect
+from hypertube.settings import MEDIA_ROOT, BASE_DIR
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -32,8 +32,7 @@ def tube_main(request):
 
     else:
         videos = Video.objects.all()
-    # print(videos.values())
-    context['videos'] = videos  # = Video.objects.all()
+    context['videos'] = videos
     return render(request, 'tube_main.html', context)
 
 
@@ -54,7 +53,6 @@ def upload_file(request):
             with open(MEDIA_ROOT + f.name, 'wb+') as destination:
                 for chunk in f.chunks():
                     destination.write(chunk)
-            # response = HttpResponseRedirect('/tube/')
             return redirect('index')
 
     else:
@@ -66,11 +64,14 @@ def watch(request, **kwargs):
     context = {}
     video = Video.objects.get(id=kwargs['id'])
     context['video'] = video
-    context['folder'] = MEDIA_ROOT
+    context['folder'] = MEDIA_ROOT + 'tube\\'
     context['type'] = video.file.split('.')[-1]
-    print(context['type'])
     context['tags'] = Tag.objects.filter(videotag__video=video)
     return render(request, 'watch.html', context)
 
 
-
+def video_loader(request, **kwargs):
+    video = open(MEDIA_ROOT.replace('/', '\\') + kwargs['vid'][:-1], 'rb')
+    response = HttpResponse(video, content_type='video/' + kwargs['vid'][:-1].split('.')[-1])
+    response['Accept-Ranges'] = 'bytes'
+    return response
