@@ -64,6 +64,12 @@ def upload_file(request):
 
 def watch(request, **kwargs):
     context = {}
+    video = Video.objects.get(id=kwargs['id'])
+    context['video'] = video
+    context['folder'] = MEDIA_ROOT
+    context['type'] = video.file.split('.')[-1]
+    print(context['type'])
+    context['tags'] = Tag.objects.filter(videotag__video=video)
     return render(request, 'watch.html', context)
 
 
