@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView
 from .forms import UploadVideoForm
-from hypertube.settings import MEDIA_ROOT, BASE_DIR
+from hypertube.settings import MEDIA_ROOT
 from django.http import HttpResponse
 # Create your views here.
 
@@ -46,8 +46,9 @@ def upload_file(request):
                 title=data['title'],
                 file=f.name,
             )
-            tg = Tag.objects.create(name=data['tags'])
-            VideoTag.objects.create(tag=tg, video=vid).save()
+            for tag in data['tags'].split():
+                tg = Tag.objects.create(name=tag)
+                VideoTag.objects.create(tag=tg, video=vid).save()
             vid.save()
             tg.save()
             with open(MEDIA_ROOT + f.name, 'wb+') as destination:
@@ -64,7 +65,6 @@ def watch(request, **kwargs):
     context = {}
     video = Video.objects.get(id=kwargs['id'])
     context['video'] = video
-    context['folder'] = MEDIA_ROOT + 'tube\\'
     context['type'] = video.file.split('.')[-1]
     context['tags'] = Tag.objects.filter(videotag__video=video)
     return render(request, 'watch.html', context)
